@@ -65,7 +65,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -98,5 +98,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# added by Anaconda3 4.3.1 installer
-export PATH="/home/labros_z/anaconda3/bin:$PATH"
+# added by Anaconda3 installer
+export PATH="/home/sorbal/anaconda3/bin:$PATH"
+
+alias temacs='emacs -nw'
+
+# OPAM configuration
+. /home/sorbal/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

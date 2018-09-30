@@ -1,3 +1,22 @@
+# Resolve DOTFILES_DIR (assuming ~/.dotfiles on distros without readlink and/or $BASH_SOURCE/$0)
+
+READLINK=$(which greadlink || which readlink)
+CURRENT_SCRIPT=$BASH_SOURCE
+
+if [[ -n $CURRENT_SCRIPT && -x "$READLINK" ]]; then
+  SCRIPT_PATH=$($READLINK -f "$CURRENT_SCRIPT")
+  DOTFILES_DIR=$(dirname "$(dirname "$SCRIPT_PATH")")
+elif [ -d "$HOME/.dotfiles" ]; then
+  DOTFILES_DIR="$HOME/.dotfiles"
+else
+  echo "Unable to find dotfiles, exiting."
+  return
+fi
+
+# Make utilities available
+
+export PATH="$DOTFILES_DIR/bin:$PATH"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -21,7 +40,6 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda context dir rbenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
-
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -98,10 +116,4 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# added by Anaconda3 installer
-export PATH="/home/sorbal/anaconda3/bin:$PATH"
-
-alias temacs='emacs -nw'
-
-# OPAM configuration
-. /home/sorbal/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+alias emacs='emacs -nw'
